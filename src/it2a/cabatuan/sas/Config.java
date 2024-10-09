@@ -30,6 +30,7 @@ public class Config {
         PreparedStatement pst = con.prepareStatement(sql);
         
         for(int i = 0; i < values.length; i++){
+            
             pst.setString(i + 1, values[i]);
         }
             pst.executeUpdate();
@@ -40,61 +41,80 @@ public class Config {
         
     }
     
-    
-     public void viewApplicants(){
-         
-         
-          String sql =  "SELECT * FROM Applicant";
+   
+         public void viewApplicants(String sqlQuery, String[] columnHeaders, String[] columnNames) {
         
-          try{
-       Connection con = connectDB();
-       PreparedStatement pst = con.prepareStatement(sql);
-       ResultSet rs = pst.executeQuery();
-       
-           System.out.println(" - Applicant Set - ");
+        if (columnHeaders.length != columnNames.length) {
+            System.out.println("Error: Mismatch between column headers and column names.");
+            return;
+        }
+
+        try (Connection conn = this.connectDB();
+             PreparedStatement pstmt = conn.prepareStatement(sqlQuery);
+             ResultSet rs = pstmt.executeQuery()) {
+
            
-           while(rs.next()){
-           int id = rs.getInt("ID");
-           String fname = rs.getString("FirstName");
-           String lname = rs.getString("LastName");
-           String address = rs.getString("Address");
-           String status = rs.getString("Status");
-           String email = rs.getString("Email");
-           
-           System.out.println("ID: " + id + ", FirstName: " + fname + ", LastName: " + lname + ", Address: " + address + ", Status: " + status + ", Email: " + email);
-       }
-       
- 
-       }catch(SQLException e){
-           System.out.println("View Error: "+e.getMessage());
-       }
-                
+            StringBuilder headerLine = new StringBuilder();
+            headerLine.append("--------------------------------------------------------------------------------\n| ");
+            for (String header : columnHeaders) {
+                headerLine.append(String.format("%-20s | ", header)); 
             }
-     
-     public void deleteApplicant(int id ){
+            headerLine.append("\n--------------------------------------------------------------------------------");
+
+            System.out.println(headerLine.toString());
+
+           
+            while (rs.next()) {
+                StringBuilder row = new StringBuilder("| ");
+                for (String colName : columnNames) {
+                    String value = rs.getString(colName);
+                    row.append(String.format("%-20s | ", value != null ? value : "")); 
+                }
+                System.out.println(row.toString());
+            }
+            System.out.println("--------------------------------------------------------------------------------");
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving records: " + e.getMessage());
+        }
+    }
+     public void deleteApplicant(String sql, Object... values) {
+    try (Connection conn = this.connectDB();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        // Loop through the values and set them in the prepared statement dynamically
+        for (int i = 0; i < values.length; i++) {
+            if (values[i] instanceof Integer) {
+                pstmt.setInt(i + 1, (Integer) values[i]); // If the value is Integer
+            } else {
+                pstmt.setString(i + 1, values[i].toString()); // Default to String for other types
+            }
+        }
+
+        pstmt.executeUpdate();
+        System.out.println("Record deleted successfully!");
+    } catch (SQLException e) {
+        System.out.println("Error deleting record: " + e.getMessage());
+    }
+}
          
-         String sql = "DELETE FROM Applicant WHERE ID = ? ";
+     
+     public void updateApplicant(String sql, Object... values){
          
          try{
-       
-       Connection con = connectDB();
-       PreparedStatement pst = con.prepareStatement(sql);
-       
-       pst.setInt(1, id);
-       
-       int rowsDelete  = pst.executeUpdate();
-       
-      if(rowsDelete > 0 ){
-          System.out.println(" - Delete Successfully - ");
-      }else{
-          System.out.println(" - Delete Failed: Applicant ID not Found - ");
-      }
-       
-       }catch(SQLException e ){
-           System.out.println("Delete Error: "+e.getMessage());
-       }
-   }
-         
+         Connection con = connectDB();
+         PreparedStatement pst = con.prepareStatement(sql);
+          for (int i = 0; i < values.length; i++) {
+              pst.setString(i + 1, values[i].toString()); 
+          }
+         pst.executeUpdate();
+             System.out.println("Update Successfully");
+         }catch(SQLException e){
+             System.out.println(" Error to Update: "+e.getMessage());
+         }
+        
+     
+}
      }
 
 
