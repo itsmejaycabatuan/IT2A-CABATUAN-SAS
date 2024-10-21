@@ -36,6 +36,7 @@ public class Applicant {
      public void viewApplicant(){
          
         String qry = "SELECT * FROM Applicant";
+         System.out.println("   Applicant List: ");
         String[] applicantHeader = {"ID", "First Name", "Last Name", "Address", "Status", "Email","Age","Contact No."};
         String[] applicantColumn = {"ID","First_Name", "Last_Name", "Address", "Status", "Email","Age","Contact_No"};
          Config con = new Config();
@@ -53,18 +54,34 @@ public class Applicant {
         
         do{
             
-        System.out.println(" - SCHOLARSHIP SYSTEM - ");
+    
+        
         System.out.println("1. Add Applicant");
         System.out.println("2. View Applicant");
         System.out.println("3. Delete Applicant");
         System.out.println("4. Update Applicant");
-        
         System.out.println("5. Exit");
         
         
-        System.out.print("Enter choice: ");
-        choice = sc.nextInt();
-        sc.nextLine();
+        
+        
+        while (true) {
+            System.out.print("Enter choice: ");
+            if (sc.hasNextInt()) {
+                choice = sc.nextInt();
+                if (choice >= 1 && choice <= 5) {
+                    break;
+                } else {
+                    System.out.println("Please enter a number between 1 and 5.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a valid number.");
+                sc.next();
+            }
+        }
+        
+        
+        
         
         switch (choice){
             
@@ -76,14 +93,13 @@ public class Applicant {
             
             case 2:
                 
-                System.out.println(" - VIEW LOCATION - ");
+             
                 app.viewApplicant();
                 break;
             
                 
             case 3:
-                
-                System.out.println(" - DELETE LOCATION - ");
+             
                  app.viewApplicant();
                 String sqlDelete = "DELETE FROM Applicant WHERE ID = ? ";
                 System.out.print("Enter ID to Delete: ");
@@ -117,18 +133,18 @@ public class Applicant {
                 
                 
             case 5:
-                
-                exit(0);
-                
+                System.out.println("Exiting.....");
                 break;
+    
+           
         }
         
             System.out.println("");
-            System.out.print("Do you want to continue? Yes / No : ");
-            response = sc.nextLine();
+            System.out.print("Do you want to continue with applicant ? Yes or  No : ");
+            response = sc.next();
       
         }while(response.equalsIgnoreCase("yes"));
-        System.out.println("Thank you for using the Application");
+        
         
      }
     

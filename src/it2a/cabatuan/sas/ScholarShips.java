@@ -33,6 +33,8 @@ public class ScholarShips {
     public void viewScholarship(){
          
         String qry = "SELECT * FROM Scholarships";
+        
+        System.out.println("    Scholarship List: ");
         String[] applicantHeader = {"ID", "Scholarship Name", "Capacity", "Full Amount", "Requirements", "Date Ends"};
         String[] applicantColumn = {"Scholarship_ID","Scholarship_name", "Capacity", "Full_Amount", "Requirements", "Date_Ends"};
          Config con = new Config();
@@ -58,9 +60,22 @@ public class ScholarShips {
         System.out.println("5. Exit");
         
          System.out.println("");
-        System.out.print("Enter choice: ");
-        choice = sc.nextInt();
-        sc.nextLine();
+         
+      while (true) {
+            System.out.print("Enter choice: ");
+            if (sc.hasNextInt()) {
+                choice = sc.nextInt();
+                if (choice >= 1 && choice <= 5) {
+                    break;
+                } else {
+                    System.out.println("Please enter a number between 1 and 5.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a valid number.");
+                sc.next();
+            }
+        }
+        
         
         switch (choice){
             
@@ -72,7 +87,7 @@ public class ScholarShips {
             
             case 2:
                 
-              System.out.println(" - VIEW LOCATION - ");
+            
 
                sch.viewScholarship();
                 break;
@@ -80,7 +95,7 @@ public class ScholarShips {
                 
             case 3:
                 
-                System.out.println(" - DELETE LOCATION - ");
+               
                 sch.viewScholarship();
                 String sqlDelete = "DELETE FROM Scholarships WHERE Scholarship_ID = ? ";
                 System.out.print("Enter ID to Delete: ");
@@ -114,19 +129,19 @@ public class ScholarShips {
                 
                 
             case 5:
+                System.out.println("Exiting.....");
                 
-                exit(0);
                 
                 break;
         }
         
             System.out.println("");
-            System.out.print("Do you want to continue? Yes / No : ");
-            response = sc.nextLine();
+            System.out.print("Do you want to continue with Scholarship ? Yes or No : ");
+            response = sc.next();
       
         }while(response.equalsIgnoreCase("yes"));
         
-        System.out.println("Thank you for using the Applicaition");
+        
         
      }
 }
