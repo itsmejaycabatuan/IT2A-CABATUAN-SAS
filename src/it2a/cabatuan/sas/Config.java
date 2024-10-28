@@ -14,8 +14,7 @@ public class Config {
         Connection con = null;
         try {
             Class.forName("org.sqlite.JDBC"); // Load the SQLite JDBC driver
-            con = DriverManager.getConnection("jdbc:sqlite:ScholarshipApply.db"); // Establish connection
-            System.out.println("Connection Successful");
+            con = DriverManager.getConnection("jdbc:sqlite:ScholarshipApply.db"); // Establish connection     
         } catch (Exception e) {
             System.out.println("Connection Failed: " + e);
         }
@@ -147,6 +146,25 @@ public class Config {
             System.out.println("Error updating record: " + e.getMessage());
         }
     }
+     public double getSingleValues(String sql, Object... params){
+         double result = 0.0;
+         
+         try(Connection conn = this.connectDB();
+             PreparedStatement pst  = conn.prepareStatement(sql)){
+             
+             
+             for(int i = 0; i < params.length; i++){
+                 pst.setObject(i + 1, params[i]);
+             }
+             ResultSet rs = pst.executeQuery();
+             if(rs.next()){
+                 result  = rs.getDouble(1);
+             }
+         }catch(SQLException e ){
+             System.out.println("Erorr retrieving single values: "+e.getMessage());
+         }
+         return  result;
+     }
      }
 
 

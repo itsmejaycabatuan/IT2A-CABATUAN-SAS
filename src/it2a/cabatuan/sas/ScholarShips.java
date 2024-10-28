@@ -23,11 +23,15 @@ public class ScholarShips {
     String req = sc.nextLine();
     System.out.print("Date Ends: ");
     String date  = sc.nextLine();
-   
+    System.out.println("GPA:");
+    double gpa = sc.nextDouble();
+    System.out.print("Annual Income: ");
+    int ann = sc.nextInt();
     
-    String sql = "INSERT INTO Scholarships(Scholarship_name , Capacity , Full_Amount, Requirements, Date_Ends) VALUES (?, ? , ?, ?, ?)";
+    
+    String sql = "INSERT INTO Scholarships(Scholarship_name , Capacity , Full_Amount, Requirements, Date_Ends, GPA, Annual_Income) VALUES (?, ? , ?, ?, ?,?,?)";
    
-    con.addApplicant(sql, sname, capacity, amount, req, date);
+    con.addApplicant(sql, sname, capacity, amount, req, date, gpa, ann);
     }
     
     public void viewScholarship(){
@@ -35,8 +39,8 @@ public class ScholarShips {
         String qry = "SELECT * FROM Scholarships";
         
         System.out.println("    Scholarship List: ");
-        String[] applicantHeader = {"ID", "Scholarship Name", "Capacity", "Full Amount", "Requirements", "Date Ends"};
-        String[] applicantColumn = {"Scholarship_ID","Scholarship_name", "Capacity", "Full_Amount", "Requirements", "Date_Ends"};
+        String[] applicantHeader = {"ID", "Scholarship Name", "Capacity", "Full Amount", "Requirements", "Date Ends","GPA","Annual Income"};
+        String[] applicantColumn = {"Scholarship_ID","Scholarship_name", "Capacity", "Full_Amount", "Requirements", "Date_Ends","GPA","Annual_Income"};
          Config con = new Config();
          con.viewApplicants(qry, applicantHeader, applicantColumn);
     }
@@ -53,13 +57,25 @@ public class ScholarShips {
         
         do{
             
-        System.out.println("1. Add Scholarship");
-        System.out.println("2. View Scholarship");
-        System.out.println("3. Delete Scholarship");
-        System.out.println("4. Update Scholarship");
-        System.out.println("5. Exit");
-        
-         System.out.println("");
+       System.out.print("\033[H\033[2J");
+            System.out.flush();
+
+            
+            System.out.println("=========================================");
+            System.out.println("|           SCHOLARSHIP MENU            |");
+            System.out.println("=========================================");
+            System.out.println("");
+
+            
+            System.out.println("          Please select an option:       ");
+            System.out.println("-----------------------------------------");
+            System.out.println("    1. Add Scholarship");
+            System.out.println("    2. View Scholarship");
+            System.out.println("    3. Delete Scholarship");
+            System.out.println("    4. Update Scholarship");
+            System.out.println("    5. Exit");
+            System.out.println("-----------------------------------------");
+            System.out.println("");
          
       while (true) {
             System.out.print("Enter choice: ");
@@ -108,7 +124,7 @@ public class ScholarShips {
                sch.viewScholarship();
 
                  
-                String sql = "UPDATE Scholarships SET Capacity  = ?, Full_Amount = ?, Requirements = ?, Date_Ends =? WHERE Scholarship_ID = ?";
+                String sql = "UPDATE Scholarships SET Capacity  = ?, Full_Amount = ?, Requirements = ?, Date_Ends =?  GPA = ?, Annual_Income = ? WHERE Scholarship_ID = ?";
                 
                 System.out.print("Enter ID of the Scholarship to Update: ");
                 int UpID = sc.nextInt();
@@ -119,11 +135,15 @@ public class ScholarShips {
                 double amount = sc.nextDouble();
                 System.out.print("Enter new Requirements: ");
                 String require = sc.next();
-                System.out.println("Enter new Date Ends : ");
+                System.out.print("Enter new Date Ends : ");
                 String ends = sc.next();
+                System.out.print("Enter new GPA: ");
+                double newgpa = sc.nextDouble();
+                System.out.print("Enter new Annual Income: ");
+                int newann = sc.nextInt();
                 
                 
-                con.updateApplicant(sql, capa, amount, require, ends, UpID);
+                con.updateApplicant(sql, capa, amount, require, ends, newgpa, newann,UpID);
                 
                 break;
                 

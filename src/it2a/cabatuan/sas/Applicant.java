@@ -54,14 +54,25 @@ public class Applicant {
         
         do{
             
-    
-        
-        System.out.println("1. Add Applicant");
-        System.out.println("2. View Applicant");
-        System.out.println("3. Delete Applicant");
-        System.out.println("4. Update Applicant");
-        System.out.println("5. Exit");
-        
+     System.out.print("\033[H\033[2J");
+            System.out.flush();
+
+          
+            System.out.println("=========================================");
+            System.out.println("|           APPLICANT MENU              |");
+            System.out.println("=========================================");
+            System.out.println("");
+
+       
+            System.out.println("          Please select an option:       ");
+            System.out.println("-----------------------------------------");
+            System.out.println("    1. Add Applicant");
+            System.out.println("    2. View Applicant");
+            System.out.println("    3. Delete Applicant");
+            System.out.println("    4. Update Applicant");
+            System.out.println("    5. Exit");
+            System.out.println("-----------------------------------------");
+            System.out.println("");
         
         
         
