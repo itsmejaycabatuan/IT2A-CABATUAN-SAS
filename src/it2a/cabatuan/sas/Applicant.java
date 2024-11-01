@@ -112,9 +112,25 @@ public class Applicant {
             case 3:
              
                  app.viewApplicant();
+                 
                 String sqlDelete = "DELETE FROM Applicant WHERE ID = ? ";
-                System.out.print("Enter ID to Delete: ");
-                int delID = sc.nextInt();
+                      
+         int delID;
+                while (true) {
+                System.out.print("Enter Applicant ID to  Delete: ");
+                if (sc.hasNextInt()) {
+                    delID = sc.nextInt();
+                    if (con.getSingleValues("SELECT ID FROM Applicant WHERE ID = ?", delID) != 0) {
+                        break;
+                    } else {
+                        System.out.println("Selected Applicant doesn't exist.");
+                    }
+                } else {
+                    System.out.println("Invalid input. Please enter a valid numeric Applicant ID.");
+                    sc.next(); 
+                }
+            }
+
                con.deleteApplicant(sqlDelete, delID);
                 break;
             
@@ -124,8 +140,22 @@ public class Applicant {
                  
                 String sql = "UPDATE Applicant SET Address  = ?, Status = ?, Email = ?, Age = ?, Contact_No = ?  WHERE ID = ?";
                 
-                System.out.print("Enter ID of the Applicant to Update: ");
-                int UpID = sc.nextInt();
+                
+         int UpID;
+                while (true) {
+                System.out.print("Enter Applicant ID to Update: ");
+                if (sc.hasNextInt()) {
+                    UpID = sc.nextInt();
+                    if (con.getSingleValues("SELECT ID FROM Applicant WHERE ID = ?", UpID) != 0) {
+                        break;
+                    } else {
+                        System.out.println("Selected Applicant doesn't exist.");
+                    }
+                } else {
+                    System.out.println("Invalid input. Please enter a valid numeric Applicant ID.");
+                    sc.next(); 
+                }
+            }
                 
                 System.out.print("Enter new Address: ");
                 String add = sc.next();

@@ -116,8 +116,21 @@ public class ScholarShips {
                
                 sch.viewScholarship();
                 String sqlDelete = "DELETE FROM Scholarships WHERE Scholarship_ID = ? ";
-                System.out.print("Enter ID to Delete: ");
-                int delID = sc.nextInt();
+               int delID;
+                while (true) {
+                System.out.print("Enter Scholarship ID to Delete: ");
+                if (sc.hasNextInt()) {
+                    delID = sc.nextInt();
+                    if (con.getSingleValues("SELECT Scholarship_ID FROM Scholarships WHERE Scholarship_ID = ?", delID) != 0) {
+                        break;
+                    } else {
+                        System.out.println("Selected Scholarship doesn't exist.");
+                    }
+                } else {
+                    System.out.println("Invalid input. Please enter a valid numeric Scholarship ID.");
+                    sc.next(); 
+                }
+            }
                con.deleteApplicant(sqlDelete, delID);
                 break;
             
@@ -128,8 +141,22 @@ public class ScholarShips {
                  
                 String sql = "UPDATE Scholarships SET Capacity  = ?, Full_Amount = ?, Requirements = ?, Date_Ends =?  GPA = ?, Annual_Income = ? WHERE Scholarship_ID = ?";
                 
-                System.out.print("Enter ID of the Scholarship to Update: ");
-                int UpID = sc.nextInt();
+                 
+        int UpID;
+                while (true) {
+                System.out.print("Enter Scholarship ID to Update : ");
+                if (sc.hasNextInt()) {
+                    UpID = sc.nextInt();
+                    if (con.getSingleValues("SELECT Scholarship_ID FROM Scholarships WHERE Scholarship_ID = ?", UpID) != 0) {
+                        break;
+                    } else {
+                        System.out.println("Selected Scholarship doesn't exist.");
+                    }
+                } else {
+                    System.out.println("Invalid input. Please enter a valid numeric Scholarship ID.");
+                    sc.next(); 
+                }
+            }
                 
                 System.out.print("Enter new Capacity: ");
                 int capa = sc.nextInt();
