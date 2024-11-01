@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 
 public class Config {
-    
+     private Connection connection;
     public static Connection connectDB() {
         Connection con = null;
         try {
@@ -165,6 +165,36 @@ public class Config {
          }
          return  result;
      }
+    public void viewApplicants(String query, String[] headers, String[] columns, String status) {
+    try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+        pstmt.setString(1, status);  // Bind the `status` parameter
+
+        ResultSet rs = pstmt.executeQuery();
+
+        if (!rs.isBeforeFirst()) {  // Check if result set is empty
+            System.out.println("No records found for status: " + status);
+            return;
+        }
+
+        // Print headers
+        for (String header : headers) {
+            System.out.printf("%-20s", header);  // Adjust width as needed
+        }
+        System.out.println();
+
+        // Print rows
+        while (rs.next()) {
+            for (String column : columns) {
+                System.out.printf("%-20s", rs.getString(column));  // Adjust width as needed
+            }
+            System.out.println();
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        System.out.println("Error fetching records.");
+    }
+}
+
      }
 
 

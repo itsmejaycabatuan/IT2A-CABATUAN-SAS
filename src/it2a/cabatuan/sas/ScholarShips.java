@@ -32,6 +32,8 @@ public class ScholarShips {
     String sql = "INSERT INTO Scholarships(Scholarship_name , Capacity , Full_Amount, Requirements, Date_Ends, GPA, Annual_Income) VALUES (?, ? , ?, ?, ?,?,?)";
    
     con.addApplicant(sql, sname, capacity, amount, req, date, gpa, ann);
+    
+    
     }
     
     public void viewScholarship(){

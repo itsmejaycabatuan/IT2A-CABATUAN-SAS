@@ -2,12 +2,14 @@
 
 package it2a.cabatuan.sas;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 
 public class ScholarshipRecords {
     
-    
+        
     public void ApplyScholar(){
         
         Config con = new Config();
@@ -54,8 +56,12 @@ public class ScholarshipRecords {
                     sc.next(); 
                 }
             }
-        System.out.print("Date Applied: ");
-        String date = sc.next();
+        
+        
+        LocalDate currdate = LocalDate.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        String date = currdate.format(format);
+       
         System.out.print("GPA: ");
         double gpa = sc.nextDouble();
         System.out.print("Annual Income: ");
@@ -67,7 +73,11 @@ public class ScholarshipRecords {
         String sql = "INSERT INTO ScholarshipRecords (Applicant_ID, Scholarship_ID, Date_Applied, GPA, Annual_Income, Requirements_Pass) VALUES (?,?,?,?,?,?)" ;
         con.addApplicant(sql, ID, scID, date, gpa, ann, req);
                 
-        
+        String updateCapacitySQL = "UPDATE Scholarships SET Capacity = Capacity - 1 WHERE Scholarship_ID = ?";
+        con.updateApplicant(updateCapacitySQL, scID);
+
+         System.out.println(" Scholarship capacity has been updated.");
+
         
     }
     
@@ -162,8 +172,7 @@ public class ScholarshipRecords {
             case 2:
                 System.out.println("    Scholarship Apply Record List: ");
                 sr.viewRecords();
-                sr.viewScholarshipRecords();
-                break;
+                 break;
                 
             case 3:
                 
