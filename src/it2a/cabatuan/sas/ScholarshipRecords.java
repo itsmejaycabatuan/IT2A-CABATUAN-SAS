@@ -61,17 +61,22 @@ public class ScholarshipRecords {
         LocalDate currdate = LocalDate.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         String date = currdate.format(format);
-       
+        
         System.out.print("GPA: ");
         double gpa = sc.nextDouble();
+
+       
         System.out.print("Annual Income: ");
         int ann = sc.nextInt();
         sc.nextLine();
+
         System.out.print("Requirements: ");
-        String req = sc.next();
+        String req = sc.nextLine();
         
-        String sql = "INSERT INTO ScholarshipRecords (Applicant_ID, Scholarship_ID, Date_Applied, GPA, Annual_Income, Requirements_Pass) VALUES (?,?,?,?,?,?)" ;
-        con.addApplicant(sql, ID, scID, date, gpa, ann, req);
+        String status  = "Pending";
+        
+        String sql = "INSERT INTO ScholarshipRecords (Applicant_ID, Scholarship_ID, Date_Applied, GPA, Annual_Income, Requirements_Pass, Status) VALUES (?,?,?,?,?,?,?)" ;
+        con.addApplicant(sql, ID, scID, date, gpa, ann, req, status);
                 
         String updateCapacitySQL = "UPDATE Scholarships SET Capacity = Capacity - 1 WHERE Scholarship_ID = ?";
         con.updateApplicant(updateCapacitySQL, scID);
@@ -80,23 +85,84 @@ public class ScholarshipRecords {
 
         
     }
+    public void viewAllrecords(){
+          Config con = new Config();
+        
+      
+     String viewQuery = "SELECT ScholarshipRecords.ScholarshipRecords_ID, Applicant.First_Name, Applicant.Last_Name, Applicant.Email, "
+             + "Scholarships.Scholarship_name, ScholarshipRecords.Date_Applied, Scholarships.Full_Amount, ScholarshipRecords.Status "
+             + "FROM ScholarshipRecords "
+             + "LEFT JOIN Applicant ON Applicant.ID = ScholarshipRecords.Applicant_ID "
+             + "LEFT JOIN Scholarships ON Scholarships.Scholarship_ID = ScholarshipRecords.Scholarship_ID";
+            
+        String[] header = {"Applied ID ", "First Name", "Last Name", "Email", "Scholarship Name", 
+                           "Date Applied", "Full Amount", "Status"};
+        String[] columns = {"ScholarshipRecords_ID", "First_Name", "Last_Name", "Email", "Scholarship_name", 
+                            "Date_Applied", "Full_Amount", "Status"};
+        
+     
+        con.viewApplicants(viewQuery, header, columns);
+    }
+    public void approvedRecords(){
+          Config con = new Config();
+        
+      
+     String viewQuery = "SELECT ScholarshipRecords.ScholarshipRecords_ID, Applicant.First_Name, Applicant.Last_Name, Applicant.Email, "
+             + "Scholarships.Scholarship_name, ScholarshipRecords.Date_Applied, Scholarships.Full_Amount, ScholarshipRecords.Status "
+             + "FROM ScholarshipRecords "
+             + "LEFT JOIN Applicant ON Applicant.ID = ScholarshipRecords.Applicant_ID "
+             + "LEFT JOIN Scholarships ON Scholarships.Scholarship_ID = ScholarshipRecords.Scholarship_ID "
+             + "WHERE ScholarshipRecords.Status = 'Approved'";
+
+
+
+
+        String[] header = {"Applied ID ", "First Name", "Last Name", "Email", "Scholarship Name", 
+                           "Date Applied", "Full Amount", "Status"};
+        String[] columns = {"ScholarshipRecords_ID", "First_Name", "Last_Name", "Email", "Scholarship_name", 
+                            "Date_Applied", "Full_Amount", "Status"};
+        con.viewApplicants(viewQuery, header, columns);
+
+    }
+    public void rejectedRecords(){
+         Config con = new Config();
+        
+      
+     String viewQuery = "SELECT ScholarshipRecords.ScholarshipRecords_ID, Applicant.First_Name, Applicant.Last_Name, Applicant.Email, "
+             + "Scholarships.Scholarship_name, ScholarshipRecords.Date_Applied, Scholarships.Full_Amount, ScholarshipRecords.Status "
+             + "FROM ScholarshipRecords "
+             + "LEFT JOIN Applicant ON Applicant.ID = ScholarshipRecords.Applicant_ID "
+             + "LEFT JOIN Scholarships ON Scholarships.Scholarship_ID = ScholarshipRecords.Scholarship_ID "
+             + "WHERE ScholarshipRecords.Status = 'Rejected'";
+
+
+
+
+        String[] header = {"Applied ID ", "First Name", "Last Name", "Email", "Scholarship Name", 
+                           "Date Applied", "Full Amount", "Status"};
+        String[] columns = {"ScholarshipRecords_ID", "First_Name", "Last_Name", "Email", "Scholarship_name", 
+                            "Date_Applied", "Full_Amount", "Status"};
+        con.viewApplicants(viewQuery, header, columns);
+    }
     
-    public void viewRecords() {
+    public void pendingRecords() {
         Config con = new Config();
         
       
-       String viewQuery = "SELECT ScholarshipRecords.Applicant_ID, Applicant.First_Name, Applicant.Last_Name, " +
-                   "ScholarshipRecords.Scholarship_ID, Scholarships.Scholarship_name, " +
-                   "ScholarshipRecords.Date_Applied, ScholarshipRecords.GPA, " +
-                   "ScholarshipRecords.Annual_Income, ScholarshipRecords.Requirements_Pass " + 
-                   "FROM ScholarshipRecords " +
-                   "INNER JOIN Applicant ON ScholarshipRecords.Applicant_ID = Applicant.ID " +
-                   "INNER JOIN Scholarships ON ScholarshipRecords.Scholarship_ID = Scholarships.Scholarship_ID";
+     String viewQuery = "SELECT ScholarshipRecords.ScholarshipRecords_ID, Applicant.First_Name, Applicant.Last_Name, Applicant.Email, "
+             + "Scholarships.Scholarship_name, ScholarshipRecords.Date_Applied, Scholarships.Full_Amount, ScholarshipRecords.Status "
+             + "FROM ScholarshipRecords "
+             + "LEFT JOIN Applicant ON Applicant.ID = ScholarshipRecords.Applicant_ID "
+             + "LEFT JOIN Scholarships ON Scholarships.Scholarship_ID = ScholarshipRecords.Scholarship_ID "
+             + "WHERE ScholarshipRecords.Status = 'Pending'";
 
-        String[] header = {"Applicant ID", "First Name", "Last Name", "Scholarship ID", "Scholarship Name", 
-                           "Date Applied", "GPA", "Annual Income", "Requirements Pass"};
-        String[] columns = {"Applicant_ID", "First_Name", "Last_Name", "Scholarship_ID", "Scholarship_name", 
-                            "Date_Applied", "GPA", "Annual_Income", "Requirements_Pass"};
+
+
+
+        String[] header = {"Applied ID ", "First Name", "Last Name", "Email", "Scholarship Name", 
+                           "Date Applied", "Full Amount", "Status"};
+        String[] columns = {"ScholarshipRecords_ID", "First_Name", "Last_Name", "Email", "Scholarship_name", 
+                            "Date_Applied", "Full_Amount", "Status"};
         
      
         con.viewApplicants(viewQuery, header, columns);
@@ -107,11 +173,61 @@ public class ScholarshipRecords {
         
         String view = "SELECT * FROM ScholarshipRecords";
          System.out.println("   Scholarsihip Records List: ");
-        String[] scholarshipHeader = {"ScholarshipRecords ID", "Applicant ID", "Scholarship ID", "Date Applied", "GPA", "Annual Income","Requirements Pass","Status"};
+        String[] scholarshipHeader = {"Applied ID", "Applicant ID", "Scholarship ID", "Date Applied", "GPA", "Annual Income","Requirements Pass","Status"};
         String[] scholarshipColumn = {"ScholarshipRecords_ID","Applicant_ID", "Scholarship_ID", "Date_Applied", "GPA", "Annual_Income", "Requirements_Pass","Status"};
         
         con.viewApplicants(view, scholarshipHeader, scholarshipColumn);
     }
+    
+    public void vRecords(){
+        
+          
+        Config con = new Config();
+        
+        String view = "SELECT * FROM ScholarshipRecords WHERE Status = 'Pending'";
+         System.out.println("   Scholarsihip Records List: ");
+        String[] scholarshipHeader = {"Applied ID", "Applicant ID", "Scholarship ID", "Date Applied", "GPA", "Annual Income","Requirements Pass","Status"};
+        String[] scholarshipColumn = {"ScholarshipRecords_ID","Applicant_ID", "Scholarship_ID", "Date_Applied", "GPA", "Annual_Income", "Requirements_Pass","Status"};
+        
+        con.viewApplicants(view, scholarshipHeader, scholarshipColumn);
+        
+        
+    }
+    public void viewScholarshipsByApplicantId() {
+    Config con = new Config();
+    Scanner sc = new Scanner(System.in);
+
+    int applicantId;
+    while (true) {
+        System.out.print("Enter Applicant ID to view all scholarships they have applied for: ");
+        if (sc.hasNextInt()) {
+            applicantId = sc.nextInt();
+            if (con.getSingleValues("SELECT ID FROM Applicant WHERE ID = ?", applicantId) != 0) {
+                break;
+            } else {
+                System.out.println("Applicant with this ID does not exist.");
+            }
+        } else {
+            System.out.println("Invalid input. Please enter a valid numeric Applicant ID.");
+            sc.next(); // clear the invalid input
+        }
+    }
+
+   
+    String viewQuery = "SELECT ScholarshipRecords.ScholarshipRecords_ID, Scholarships.Scholarship_name, "
+                       + "ScholarshipRecords.Date_Applied, ScholarshipRecords.Status "
+                       + "FROM ScholarshipRecords "
+                       + "LEFT JOIN Scholarships ON Scholarships.Scholarship_ID = ScholarshipRecords.Scholarship_ID "
+                       + "WHERE ScholarshipRecords.Applicant_ID = ?";
+
+    
+    String[] header = {"Applied ID", "Scholarship Name", "Date Applied", "Status"};
+    String[] columns = {"ScholarshipRecords_ID", "Scholarship_name", "Date_Applied", "Status"};
+
+   
+    con.viewApplicantss(viewQuery, header, columns, applicantId);
+}
+
     
     public void Records(){
         
@@ -121,7 +237,7 @@ public class ScholarshipRecords {
         Scanner sc = new Scanner(System.in);
         String response;
         
-        do{
+        do{ 
                        System.out.print("\033[H\033[2J");
             System.out.flush();
 
@@ -170,46 +286,32 @@ public class ScholarshipRecords {
                 break;
                 
             case 2:
-                System.out.println("    Scholarship Apply Record List: ");
-                sr.viewRecords();
+                System.out.println("    Scholarship Applied Record List: ");
+                sr.viewScholarshipRecords();
                  break;
                 
             case 3:
                 
-                sr.viewRecords();
-                String sqlUpdate = "UPDATE ScholarshipRecords SET GPA = ?, Annual_Income = ?, Requirements_Pass = ?  WHERE Applicant_ID = ? AND Scholarship_ID = ? ";
+                sr.viewScholarshipRecords();
+                String sqlUpdate = "UPDATE ScholarshipRecords SET GPA = ?, Annual_Income = ?, Requirements_Pass = ?  WHERE ScholarshipRecords_ID = ? ";
                 
                 int id;
                 while (true) {
-                System.out.print("Enter Applicant ID to Update : ");
+                System.out.print("Enter Applied ID to Update : ");
                 if (sc.hasNextInt()) {
                     id = sc.nextInt();
-                    if (con.getSingleValues("SELECT ID FROM Applicant WHERE ID = ?", id) != 0) {
+                    if (con.getSingleValues("SELECT ScholarshipRecords_ID FROM ScholarshipRecords WHERE ScholarshipRecords_ID = ?", id) != 0) {
                         break;
                     } else {
-                        System.out.println("Selected Applicant doesn't exist.");
+                        System.out.println("Selected Applied Applicant doesn't exist.");
                     }
                 } else {
-                    System.out.println("Invalid input. Please enter a valid numeric Applicant ID.");
+                    System.out.println("Invalid input. Please enter a valid numeric Applied ID.");
                     sc.next(); 
                 }
             }
                 
-                   int id2;
-                while (true) {
-                System.out.print("Enter Scholarship ID to Update : ");
-                if (sc.hasNextInt()) {
-                    id2 = sc.nextInt();
-                    if (con.getSingleValues("SELECT Scholarship_ID FROM Scholarships WHERE Scholarship_ID = ?", id2) != 0) {
-                        break;
-                    } else {
-                        System.out.println("Selected Scholarship doesn't exist.");
-                    }
-                } else {
-                    System.out.println("Invalid input. Please enter a valid numeric Scholarship ID.");
-                    sc.next(); 
-                }
-            }
+                  
                 
                 System.out.print("Enter new GPA: ");
                 double  newGPa = sc.nextDouble();
@@ -217,28 +319,27 @@ public class ScholarshipRecords {
                 int newann = sc.nextInt();
                 sc.nextLine();
                 System.out.print("Enter new Requirements you pass: ");
-                String  newreq = sc.next();
+                String  newreq = sc.nextLine();
                 
-                con.updateApplicant(sqlUpdate,newGPa,newann,newreq,id,id2);
+                con.updateApplicant(sqlUpdate,newGPa,newann,newreq,id);
                 break;
                 
             case 4:
-                
-                sr.viewScholarshipRecords();
+              sr.viewScholarshipRecords();
                 String sqlDELETE = "DELETE FROM ScholarshipRecords WHERE ScholarshipRecords_ID = ?";
               
                    int idDEL;
                 while (true) {
-                System.out.print("Enter Scholarship ID to Update : ");
+                System.out.print("Enter Applied ID to delete : ");
                 if (sc.hasNextInt()) {
                     idDEL = sc.nextInt();
                     if (con.getSingleValues("SELECT ScholarshipRecords_ID FROM ScholarshipRecords WHERE ScholarshipRecords_ID = ?", idDEL) != 0) {
                         break;
                     } else {
-                        System.out.println("Selected Scholarship Records ID  doesn't exist.");
+                        System.out.println("Selected Applied Applicant ID  doesn't exist.");
                     }
                 } else {
-                    System.out.println("Invalid input. Please enter a valid numeric Scholarship Records ID.");
+                    System.out.println("Invalid input. Please enter a valid numeric Applied ID.");
                     sc.next(); 
                 }
             }

@@ -67,25 +67,25 @@
                         break;
 
                    case 4:
-                        System.out.print("Are you an HR? Yes or No: ");
+                        System.out.print("Are you an admin? Yes or No: ");
                         String res = sc.next();
 
                         if (res.equalsIgnoreCase("yes")) {
 
-                        System.out.print("Enter HR password: ");
+                        System.out.print("Enter admin password: ");
                         String hrPassword = sc.next();
 
-                        final String HR_PASSWORD = "hr1234";
+                        final String HR_PASSWORD = "admin1234";
 
 
                         if (hrPassword.equals(HR_PASSWORD)) {
                             Status st = new Status();
                             st.StatusApply(); 
                         } else {
-                            System.out.println("Invalid HR password. Access denied.");
+                            System.out.println("Invalid admin password. Access denied.");
                         }
                     } else {
-                        System.out.println("You do not have permission to access HR-only features.");
+                        System.out.println("You do not have permission to access admin-only features.");
                     }
                     break;
 

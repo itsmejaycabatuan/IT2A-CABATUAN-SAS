@@ -32,7 +32,11 @@ public class Status {
             System.out.println("-----------------------------");
             System.out.println("1. Edit Status");
             System.out.println("2. View Status");
-            System.out.println("3. Logout");
+            System.out.println("3. Pending Status");
+            System.out.println("4. Approved Status");
+            System.out.println("5. Rejected Status");
+            System.out.println("6. View Applicant by Id");
+            System.out.println("7. Log out");
             System.out.println("-----------------------------");
             System.out.println("");
 
@@ -42,7 +46,7 @@ public class Status {
             System.out.print("Enter choice: ");
             if (sc.hasNextInt()) {
                 choice = sc.nextInt();
-                if (choice >= 1 && choice <= 3) {
+                if (choice >= 1 && choice <= 7) {
                     break;
                 } else {
                     System.out.println("Please enter a number between 1 and 3.");
@@ -108,17 +112,34 @@ public class Status {
              
              case 2:
                  sr = new ScholarshipRecords();
-                 sr.viewScholarshipRecords();
+                 sr.viewAllrecords();
                  break;
                         
              case 3:
-                 System.out.println("Back to Main Menu.....");
+                  sr = new ScholarshipRecords();
+                  sr.pendingRecords();
                  
                  break;
-             
-             
+             case 4:
+                  sr = new ScholarshipRecords();
+                  sr.approvedRecords();
+                 break;
+             case 5:
+                  sr = new ScholarshipRecords();
+                  sr.rejectedRecords();
+                 break;
+             case 6:
+                  Applicant apps = new Applicant();
+               apps.viewApplicant();
+                  sr = new ScholarshipRecords();
+                  sr.viewScholarshipsByApplicantId();
+    
+                 break;
+             case 7:
+                 System.out.println("Log Out");
+                 break;
          }
-            System.out.print("Do you want to continue in HR updating? Yes or No: ");
+            System.out.print("Do you want to continue in admin updating? Yes or No: ");
             res = sc.next();
         }while(res.equalsIgnoreCase("yes"));
         

@@ -165,35 +165,43 @@ public class Config {
          }
          return  result;
      }
-    public void viewApplicants(String query, String[] headers, String[] columns, String status) {
-    try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-        pstmt.setString(1, status);  // Bind the `status` parameter
+  public void viewApplicantss(String query, String[] header, String[] columns, int applicantId) {
+    try (Connection conn = this.connectDB();  // Use the configuration to get the connection
+         PreparedStatement stmt = conn.prepareStatement(query)) {
 
-        ResultSet rs = pstmt.executeQuery();
+        // Set the applicantId parameter for filtering
+        stmt.setInt(1, applicantId);
+        
+        ResultSet rs = stmt.executeQuery();
 
-        if (!rs.isBeforeFirst()) {  // Check if result set is empty
-            System.out.println("No records found for status: " + status);
-            return;
-        }
-
-        // Print headers
-        for (String header : headers) {
-            System.out.printf("%-20s", header);  // Adjust width as needed
+        // Print header
+        for (String h : header) {
+            System.out.print(h + "\t");
         }
         System.out.println();
+        
+        // Print a separator line after the header for better readability
+        System.out.println("------------------------------------------------------------");
 
         // Print rows
         while (rs.next()) {
-            for (String column : columns) {
-                System.out.printf("%-20s", rs.getString(column));  // Adjust width as needed
+            for (String col : columns) {
+                System.out.print(rs.getString(col) + "          \t");
             }
             System.out.println();
+            
+            // Print a separator line between rows
+            System.out.println("------------------------------------------------------------");
         }
+
     } catch (SQLException e) {
         e.printStackTrace();
-        System.out.println("Error fetching records.");
     }
 }
+
+    
+    
+    
 
      }
 
