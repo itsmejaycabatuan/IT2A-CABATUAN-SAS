@@ -9,23 +9,31 @@ public class Applicant {
     
     public  void addApplicant(){
    
-       Config con = new Config();
-    Scanner sc = new Scanner(System.in);
-    System.out.print("Enter First Name: ");
-    String fname = sc.next();
-    System.out.print("Enter Last Name: ");
-    String lname = sc.next();
-    System.out.print("Address: ");
-    String add = sc.next();
-    System.out.print("Status : ");
-    String stat = sc.next();
-    System.out.print("Email: ");
-    String email = sc.next();
-    System.out.print("Age: ");
-    int age = sc.nextInt();
-    System.out.print("Contact No.: ");
-    String contact = sc.next();
-    
+     Config con = new Config();
+Scanner sc = new Scanner(System.in);
+
+System.out.print("Enter First Name: ");
+String fname = sc.nextLine();  
+
+System.out.print("Enter Last Name: ");
+String lname = sc.nextLine();  
+
+System.out.print("Address: ");
+String add = sc.nextLine();  
+
+System.out.print("Status: ");
+String stat = sc.nextLine(); 
+
+System.out.print("Email: ");
+String email = sc.nextLine(); 
+
+System.out.print("Age: ");
+int age = sc.nextInt();  
+sc.nextLine();
+
+System.out.print("Contact No.: ");
+String contact = sc.nextLine();  
+
     String sql = "INSERT INTO Applicant(First_Name, Last_Name, Address, Status, Email, Age, Contact_No ) VALUES (?, ? , ?, ?, ?, ?, ? )";
    
     con.addApplicant(sql, fname, lname, add, stat, email,age, contact);
