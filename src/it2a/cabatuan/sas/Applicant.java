@@ -27,8 +27,21 @@ String stat = sc.nextLine();
 System.out.print("Email: ");
 String email = sc.nextLine(); 
 
-System.out.print("Age: ");
-int age = sc.nextInt();  
+int age;
+  while (true) {
+            System.out.print("Age: ");
+            if (sc.hasNextInt()) {
+                age = sc.nextInt(); 
+                if (age < 0) {  
+                    System.out.println("Age cannot be negative. Please enter a valid age.");
+                    continue;
+                }
+                break;  
+            } else {
+                System.out.println("Invalid input. Please enter a valid integer.");
+                sc.next(); 
+            }
+        }
 sc.nextLine();
 
 System.out.print("Contact No.: ");
@@ -167,12 +180,30 @@ String contact = sc.nextLine();
                 
                 System.out.print("Enter new Address: ");
                 String add = sc.next();
+                
                 System.out.print("Enter new Status: ");
                 String stat = sc.next();
+                
                 System.out.print("Enter new Email: ");
                 String email = sc.next();
-                System.out.println("Enter new Age: ");
-                int age = sc.nextInt();
+                
+
+                        int age;
+                    while (true) {
+                    System.out.print("Enter new Age: ");
+                    if (sc.hasNextInt()) {
+                        age = sc.nextInt(); 
+                        if (age < 0) {  
+                            System.out.println("Age cannot be negative. Please enter a valid age.");
+                            continue;
+                        }
+                        break;  
+                    } else {
+                        System.out.println("Invalid input. Please enter a valid integer.");
+                        sc.next(); 
+                    }
+                }
+                    
                 System.out.print("Enter new Contact Number: ");
                 String contact = sc.next();
                 

@@ -14,20 +14,61 @@ public class ScholarShips {
     
     System.out.print("Scholarship Name: ");
     String sname = sc.next();
-    System.out.print("Capacity: ");
-    int capacity = sc.nextInt();
-    System.out.print("Full Amount: ");
-    double amount = sc.nextDouble();
+   
+    int capacity;
+     while (true) {
+            System.out.print("Capacity: ");
+            if (sc.hasNextInt()) {
+                capacity = sc.nextInt(); 
+                break;  
+            } else {
+                System.out.println("Invalid input. Please enter a valid Capacity.");
+                sc.next(); 
+            }
+        }
+     double amount;
+     while (true) {
+           System.out.print("Full Amount: ");
+            if (sc.hasNextInt()) {
+                amount = sc.nextDouble(); 
+                break;  
+            } else {
+                System.out.println("Invalid input. Please enter a valid Amount.");
+                sc.next(); 
+            }
+        }
+
     sc.nextLine();
+    
     System.out.print("Requirements: ");
     String req = sc.nextLine();
+    
     System.out.print("Date Ends: ");
     String date  = sc.nextLine();
-    System.out.println("GPA:");
-    double gpa = sc.nextDouble();
-    System.out.print("Annual Income: ");
-    int ann = sc.nextInt();
-    
+   
+     double gpa;
+     while (true) {
+          System.out.print("GPA:");
+            if (sc.hasNextDouble()) {
+                gpa = sc.nextDouble(); 
+                break;  
+            } else {
+                System.out.println("Invalid input. Please enter a valid GPA.");
+                sc.next(); 
+            }
+        }
+
+    int ann;
+     while (true) {
+         System.out.print("Annual Income: ");
+            if (sc.hasNextInt()) {
+                ann = sc.nextInt(); 
+                break;  
+            } else {
+                System.out.println("Invalid input. Please enter a valid Annual Income.");
+                sc.next(); 
+            }
+        }
     
     String sql = "INSERT INTO Scholarships(Scholarship_name , Capacity , Full_Amount, Requirements, Date_Ends, GPA, Annual_Income) VALUES (?, ? , ?, ?, ?,?,?)";
    
@@ -127,7 +168,7 @@ public class ScholarShips {
                         System.out.println("Selected Scholarship doesn't exist.");
                     }
                 } else {
-                    System.out.println("Invalid input. Please enter a valid numeric Scholarship ID.");
+                    System.out.println("Invalid input. Please enter a valid Scholarship ID.");
                     sc.next(); 
                 }
             }
@@ -153,24 +194,66 @@ public class ScholarShips {
                         System.out.println("Selected Scholarship doesn't exist.");
                     }
                 } else {
-                    System.out.println("Invalid input. Please enter a valid numeric Scholarship ID.");
+                    System.out.println("Invalid input. Please enter a valid Scholarship ID.");
                     sc.next(); 
                 }
             }
                 
-                System.out.print("Enter new Capacity: ");
-                int capa = sc.nextInt();
-                System.out.print("Enter new Full Amount: ");
-                double amount = sc.nextDouble();
+                
+                    int capa;
+                   while (true) {
+               System.out.print("Enter new Capacity: ");
+               if (sc.hasNextInt()) {
+                   capa = sc.nextInt(); 
+                   break;  
+               } else {
+                   System.out.println("Invalid input. Please enter a valid Capacity.");
+                   sc.next(); 
+               }
+           }
+                
+                    double amount;
+        while (true) {
+              System.out.print("Enter new Full Amount: ");
+               if (sc.hasNextInt()) {
+                   amount = sc.nextDouble(); 
+                   break;  
+               } else {
+                   System.out.println("Invalid input. Please enter a valid Amount.");
+                   sc.next(); 
+               }
+           }
                 System.out.print("Enter new Requirements: ");
                 String require = sc.next();
+                
                 System.out.print("Enter new Date Ends : ");
                 String ends = sc.next();
-                System.out.print("Enter new GPA: ");
-                double newgpa = sc.nextDouble();
-                System.out.print("Enter new Annual Income: ");
-                int newann = sc.nextInt();
-                
+
+              double newgpa;
+            while (true) {
+                 System.out.print("Enter new GPA:");
+                   if (sc.hasNextDouble()) {
+                       newgpa = sc.nextDouble(); 
+                       break;  
+                   } else {
+                       System.out.println("Invalid input. Please enter a valid GPA.");
+                       sc.next(); 
+                   }
+               }
+
+               
+                int newann;
+     while (true) {
+         System.out.print("Enter new Annual Income: ");
+            if (sc.hasNextInt()) {
+                newann = sc.nextInt(); 
+                break;  
+            } else {
+                System.out.println("Invalid input. Please enter a valid Annual Income.");
+                sc.next(); 
+            }
+        }
+    
                 
                 con.updateApplicant(sql, capa, amount, require, ends, newgpa, newann,UpID);
                 

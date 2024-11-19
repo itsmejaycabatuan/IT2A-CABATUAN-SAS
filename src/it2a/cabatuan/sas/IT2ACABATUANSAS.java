@@ -32,11 +32,12 @@
                 System.out.println("    1. APPLICANT");
                 System.out.println("    2. SCHOLARSHIP");
                 System.out.println("    3. SCHOLARSHIP RECORDS");
-                System.out.println("    4. HR ONLY");
+                System.out.println("    4. ADMIN");
                 System.out.println("    5. EXIT THE APPLICATION");
                 System.out.println("-----------------------------------------");
                 System.out.println("");
                 System.out.println("");
+              
                 while (true) {
                     System.out.print("Enter choice: ");
                     if (sc.hasNextInt()) {
@@ -72,20 +73,20 @@
 
                         if (res.equalsIgnoreCase("yes")) {
 
-                        System.out.print("Enter admin password: ");
+                        System.out.print("Admin password: ");
                         String hrPassword = sc.next();
 
-                        final String HR_PASSWORD = "admin1234";
+                        final String HR_PASSWORD = "admin";
 
 
                         if (hrPassword.equals(HR_PASSWORD)) {
                             Status st = new Status();
                             st.StatusApply(); 
                         } else {
-                            System.out.println("Invalid admin password. Access denied.");
+                            System.out.println("Invalid password. Access denied.");
                         }
                     } else {
-                        System.out.println("You do not have permission to access admin-only features.");
+                        System.out.println("You do not have permission to access.");
                     }
                     break;
 

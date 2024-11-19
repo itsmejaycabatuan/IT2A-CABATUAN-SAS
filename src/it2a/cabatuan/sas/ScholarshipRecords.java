@@ -62,14 +62,32 @@ public class ScholarshipRecords {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         String date = currdate.format(format);
         
-        System.out.print("GPA: ");
-        double gpa = sc.nextDouble();
+            double gpa;
+                while (true) {
+                     System.out.print("GPA:");
+                       if (sc.hasNextDouble()) {
+                           gpa = sc.nextDouble(); 
+                           break;  
+                       } else {
+                           System.out.println("Invalid input. Please enter a valid GPA.");
+                           sc.next(); 
+                       }
+                   }
 
-       
-        System.out.print("Annual Income: ");
-        int ann = sc.nextInt();
         sc.nextLine();
-
+         int ann;
+     while (true) {
+         System.out.print("Annual Income: ");
+            if (sc.hasNextInt()) {
+                ann = sc.nextInt(); 
+                break;  
+            } else {
+                System.out.println("Invalid input. Please enter a valid Annual Income.");
+                sc.next(); 
+            }
+        }
+        
+        
         System.out.print("Requirements: ");
         String req = sc.nextLine();
         
@@ -209,7 +227,7 @@ public class ScholarshipRecords {
             }
         } else {
             System.out.println("Invalid input. Please enter a valid numeric Applicant ID.");
-            sc.next(); // clear the invalid input
+            sc.next(); 
         }
     }
 
@@ -312,12 +330,32 @@ public class ScholarshipRecords {
             }
                 
                   
-                
-                System.out.print("Enter new GPA: ");
-                double  newGPa = sc.nextDouble();
+              
+            double newGPa;
+                while (true) {
+                     System.out.print("Enter new GPA:");
+                       if (sc.hasNextDouble()) {
+                           newGPa = sc.nextDouble(); 
+                           break;  
+                       } else {
+                           System.out.println("Invalid input. Please enter a valid GPA.");
+                           sc.next(); 
+                       }
+                   }
+
+                        int newann;
+            while (true) {
                 System.out.print("Enter new Annual Income: ");
-                int newann = sc.nextInt();
+                   if (sc.hasNextInt()) {
+                       newann = sc.nextInt(); 
+                       break;  
+                   } else {
+                       System.out.println("Invalid input. Please enter a valid Annual Income.");
+                       sc.next(); 
+                   }
+               }
                 sc.nextLine();
+                
                 System.out.print("Enter new Requirements you pass: ");
                 String  newreq = sc.nextLine();
                 

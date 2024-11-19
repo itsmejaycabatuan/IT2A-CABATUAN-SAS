@@ -35,7 +35,7 @@ public class Status {
             System.out.println("3. Pending Status");
             System.out.println("4. Approved Status");
             System.out.println("5. Rejected Status");
-            System.out.println("6. View Applicant by Id");
+            System.out.println("6. View Applicant");
             System.out.println("7. Log out");
             System.out.println("-----------------------------");
             System.out.println("");
